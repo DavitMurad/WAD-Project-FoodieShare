@@ -1,4 +1,118 @@
+/* Combined styles for header and posts - style.css */
+
+/* Header Styles */
 body {
-    background-color: lightblue;
-    color: #ffff;
-  }
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.site-header {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar-links a, .search-bar button {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search-bar {
+  display: flex;
+}
+
+.search-bar input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-right: none;
+  font-size: 16px;
+}
+
+.search-bar button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
+
+.search-bar button:hover {
+  background-color: #e7e7e7;
+}
+
+/* Post Styles */
+.main-feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.post {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.post img {
+  width: 100%;
+  display: block;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.post p {
+  padding: 15px;
+  margin: 0;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+.interactions {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+.interactions span {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.likes:before, .comments:before {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.likes:before {
+  content: '❤️';
+}
+
+.comments:before {
+  content: '💬';
+}

@@ -20,6 +20,6 @@ from foodieshare import views
 
 urlpatterns = [
     path('', views.main_feed, name='main_feed'),
-    path('rango/', include('foodieshare.urls')),
+    path('foodieshare/', include('foodieshare.urls')),
     path('admin/', admin.site.urls),
 ]

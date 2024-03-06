@@ -5,13 +5,38 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/main_feed.css' %}">
 
-    <title>Page Title</title>
+    <title>Main Feed</title>
 </head>
 
 <body>
-    <h1>This is a Heading</h1>
-    <p>This is a paragraph.</p>
-
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'main_feed' %}">FOODIESHARE</a>
+            </div>
+            <div class="navbar-links">
+                <a href="{% url 'foodieshare:profile' %}">Profile</a>
+                <a href="{% url 'foodieshare:register' %}">Register</a>
+                <a href="{% url 'foodieshare:login' %}">Login</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button type="submit">Search</button>
+            </div>
+        </nav>
+    </header>
+    <div class="main-feed">
+        {% for post in posts %}
+            <div class="post">
+                <img src="{% static 'foodieshare/images/meal.jpg' %}" alt = "Image of the Post">
+                <p>{{ post.recipe }}</p>
+                <div class="interactions">
+                    <span class="likes">{{ post.likes.all.count }}</span>
+                    <span class="comments"> {{ post.comments.all.count }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 
 </html>
