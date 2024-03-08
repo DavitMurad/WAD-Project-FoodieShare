@@ -1,0 +1,7 @@
+asgiref==3.7.2
+Django==2.2.28
+pillow==10.2.0
+pytz==2023.3.post1
+setuptools==68.2.2
+sqlparse==0.4.4
+wheel==0.41.2

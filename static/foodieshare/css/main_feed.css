@@ -1,11 +1,12 @@
-/* Combined styles for header and posts - style.css */
+/* style.css */
 
-/* Header Styles */
+/* Global Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
+/* Header Styles */
 .site-header {
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
@@ -57,7 +58,7 @@ body {
   background-color: #e7e7e7;
 }
 
-/* Post Styles */
+/* Main Feed Styles */
 .main-feed {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -74,12 +75,35 @@ body {
   overflow: hidden;
 }
 
-.post img {
+.post > img {
   width: 100%;
   display: block;
   height: auto;
   max-height: 300px;
   object-fit: cover;
+}
+
+
+.user-info, .post > a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-info:hover, .post > a:hover {
+  opacity: 0.8;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
 }
 
 .post p {

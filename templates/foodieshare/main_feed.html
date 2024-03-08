@@ -27,15 +27,22 @@
     </header>
     <div class="main-feed">
         {% for post in posts %}
-            <div class="post">
-                <img src="{% static 'foodieshare/images/meal.jpg' %}" alt = "Image of the Post">
-                <p>{{ post.recipe }}</p>
-                <div class="interactions">
-                    <span class="likes">{{ post.likes.all.count }}</span>
-                    <span class="comments"> {{ post.comments.all.count }}</span>
-                </div>
+        <div class="post">
+            <a href="{% url 'foodieshare:profile' %}" class="user-info">
+                <img class="profile-pic" src="{% static 'foodieshare/images/user.jpg' %}" alt="{{ post.user.auth_user.username }}">
+                <span class="username">{{ post.user.auth_user.username }}</span>
+            </a>
+            <a href="https://www.instagram.com/">
+                <img src="{% static 'foodieshare/images/meal.jpg' %}" alt="Post image">
+            </a>
+            <p>{{ post.recipe }}</p>
+            <div class="interactions">
+                <span class="likes">{{ post.likes.all.count }}</span>
+                <span class="comments">{{ post.comments.all.count }}</span>
             </div>
-        {% endfor %}
+        </div>
+    {% endfor %}
+    
     </div>
 </body>
 
