@@ -4,6 +4,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/main_feed.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/header.css' %}">
 
     <title>Main Feed</title>
 </head>
@@ -20,7 +21,7 @@
                 <a href="{% url 'foodieshare:login' %}">Login</a>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search..." onkeypress="search_by_type">
                 <button type="submit">Search</button>
             </div>
         </nav>

@@ -1,64 +1,6 @@
-/* style.css */
-
-/* Global Styles */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-/* Header Styles */
-.site-header {
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 20px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo a {
-  font-size: 24px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #333;
-}
-
-.navbar-links a, .search-bar button {
-  margin-left: 20px;
-  text-decoration: none;
-  color: #333;
-  font-size: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.search-bar {
-  display: flex;
-}
-
-.search-bar input[type="text"] {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-right: none;
-  font-size: 16px;
-}
-
-.search-bar button {
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  background-color: #f8f8f8;
-  font-size: 16px;
-}
-
-.search-bar button:hover {
-  background-color: #e7e7e7;
-}
 
 /* Main Feed Styles */
+
 .main-feed {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
