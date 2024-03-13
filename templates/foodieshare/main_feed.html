@@ -9,29 +9,29 @@
     <title>Main Feed</title>
 </head>
 
-<body>
+<body>    
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
                 <a href="{% url 'main_feed' %}">FOODIESHARE</a>
             </div>
             <div class="navbar-links">
-                <a href="{% url 'foodieshare:profile' %}">Profile</a>
+                <a href="{% url 'foodieshare:my_profile' %}">Profile</a>
                 <a href="{% url 'foodieshare:register' %}">Register</a>
                 <a href="{% url 'foodieshare:login' %}">Login</a>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="Search..." onkeypress="search_by_type">
-                <button type="submit">Search</button>
+                <input type="text" id = "searchInput" placeholder="Search..." >
+                <button type="submit" id="searchButton">Search</button>
             </div>
         </nav>
     </header>
     <div class="main-feed">
         {% for post in posts %}
-        <div class="post">
-            <a href="{% url 'foodieshare:profile' %}" class="user-info">
+        <div class="post" data-username="{{ post.user.auth_user.username  }}" data-recipe="{{ post.recipe }}">
+            <a href="{% url 'foodieshare:user_profile' %}" class="user-info">
                 <img class="profile-pic" src="{% static 'foodieshare/images/user.jpg' %}" alt="{{ post.user.auth_user.username }}">
-                <span class="username">{{ post.user.auth_user.username }}</span>
+                <span class="username" id = "userID">{{ post.user.auth_user.username }}</span>
             </a>
             <a href="https://www.instagram.com/">
                 <img src="{% static 'foodieshare/images/meal.jpg' %}" alt="Post image">
@@ -43,8 +43,8 @@
             </div>
         </div>
     {% endfor %}
-    
     </div>
+    <script src="{% static 'foodieshare/js/searchPosts.js' %}"></script>
 </body>
 
 </html>
