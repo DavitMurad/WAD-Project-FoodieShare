@@ -21,3 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.addEventListener('input', performSearch);
     searchButton.addEventListener('click', performSearch);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggle-comments').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentsContainer = this.nextElementSibling;
+            commentsContainer.style.display = commentsContainer.style.display === 'none' ? '' : 'none';
+        });
+    });
+});

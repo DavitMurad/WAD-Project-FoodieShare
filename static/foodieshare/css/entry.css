@@ -1,0 +1,58 @@
+/* Styles for Login and Register Pages */
+
+.auth-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 20px;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-container input[type='email'],
+.auth-container input[type='password'],
+.auth-container button {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.auth-container input[type='email'],
+.auth-container input[type='password'] {
+    font-size: 16px;
+}
+
+.auth-container button {
+    background-color: #5cb85c; /* A nice shade of green */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.auth-container button:hover {
+    background-color: #4cae4c; /* A darker shade for hover effect */
+}
+
+.auth-container a {
+    color: #5cb85c;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}
+
+/* Additional styling can be done here if needed */

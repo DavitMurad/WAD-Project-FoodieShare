@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/header.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FOODIESHARE{% endblock %}</title>
+    
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'main_feed' %}">FOODIESHARE</a>
+            </div>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Login or registration forms will go here -->
+        {% endblock %}
+    </main>
+</body>
+</html>
+

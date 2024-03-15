@@ -1,0 +1,13 @@
+{% extends 'foodieshare/base_profile.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div class="profile-container">
+    <div class="user-info">
+        <img class="profile-pic" src="{% static 'foodieshare/images/user.jpg' %}" alt="{{ post.user.auth_user.username }}">
+        <h2>{{ user.username }}</h2>
+        <p>{{ user.userprofile.bio }}</p>
+    </div>
+    {% endblock %}

@@ -39,12 +39,19 @@
             <p>{{ post.recipe }}</p>
             <div class="interactions">
                 <span class="likes">{{ post.likes.all.count }}</span>
-                <span class="comments">{{ post.comments.all.count }}</span>
-            </div>
+                <button class="toggle-comments">Comments ({{ post.comments.all.count }})</button>
+                <div class="comments-container" style="display: none;">
+                    {% for comment in post.comments.all %}
+                    <div class="comment">
+                        <strong>{{ comment.user.auth_user.username }}:</strong>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
         </div>
     {% endfor %}
     </div>
-    <script src="{% static 'foodieshare/js/searchPosts.js' %}"></script>
+    <script src="{% static 'foodieshare/js/main_feed.js' %}"></script>
 </body>
 
 </html>

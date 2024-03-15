@@ -1,15 +1,21 @@
-<!DOCTYPE html>
-<html>
+{% extends 'foodieshare/entry_base.html' %}
+{% load staticfiles %}
 
-<head>
-    <title>Page Title</title>
-</head>
+{% block title %}Register{% endblock %}
 
-<body>
+{% block content %}
 
-    <h1>Register</h1>
-    <p>This is a paragraph.</p>
+<link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/entry.css' %}">
 
-</body>
-
-</html>
+<div class="auth-container">
+    <h2>Register</h2>
+    <form method="post" action="{% url 'foodieshare:register' %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password1" placeholder="Password" required>
+        <input type="password" name="password2" placeholder="Verify Password" required>
+        <button type="submit">Register</button>
+        <a href="{% url 'foodieshare:login' %}">Login</a>
+    </form>
+</div>
+{% endblock %}

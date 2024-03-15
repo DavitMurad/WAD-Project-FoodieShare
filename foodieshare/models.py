@@ -6,7 +6,7 @@ class UserProfile(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
     date_of_birth = models.DateField()
     bio = models.CharField(max_length=20)
-    profile_picture_path = models.CharField(max_length=100)
+    profile_picture= models.ImageField(default = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg")
 
     def __str__(self):
         return self.auth_user.username
@@ -15,7 +15,7 @@ class UserProfile(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(
         UserProfile, related_name='posts', on_delete=models.CASCADE)
-    post_image_path = models.CharField(max_length=100)
+    post_image= models.ImageField(default = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg")
     nutrition = models.TextField()
     recipe = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
