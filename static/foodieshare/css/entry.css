@@ -1,52 +1,56 @@
-/* Styles for Login and Register Pages */
-
-.auth-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center;
-}
-
-.auth-container h2 {
-    margin-bottom: 20px;
-}
-
+/* Adjustments for registration form */
 .auth-container form {
-    display: flex;
-    flex-direction: column;
+    margin-top: 30px; /* Add space on top of the form */
+    padding: 30px; /* Add more padding inside the form */
+    background: #ffffff;
+    border: 1px solid #ccc; /* Make the border lighter */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px; /* Match border radius from screenshot */
 }
 
-.auth-container input[type='email'],
-.auth-container input[type='password'],
-.auth-container button {
+/* Style for the error messages */
+.errorlist {
+    margin: 10px 0;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Light red border */
+    border-radius: 4px; /* Slightly rounded borders for the error message */
+    color: #721c24; /* Dark red text color */
+    list-style-type: none; /* Remove bullet points */
 }
 
+/* Adjust the individual input fields for better spacing and alignment */
+.auth-container input[type='text'],
 .auth-container input[type='email'],
 .auth-container input[type='password'] {
-    font-size: 16px;
+    margin-bottom: 15px; /* Add more space between fields */
+    border: 1px solid #ccc; /* Lighten border color */
+    border-radius: 4px; /* Slightly rounded borders for inputs */
 }
 
-.auth-container button {
-    background-color: #5cb85c; /* A nice shade of green */
+/* Submit button styling */
+.auth-container button[type='submit'] {
+    margin-top: 20px; /* Space above the button */
+    padding: 10px 15px; /* Larger padding for a bigger button */
+    width: 100%; /* Full width button */
+    font-size: 18px; /* Larger font size */
+    background-color: #28a745; /* Bootstrap success color for the button */
     color: white;
     border: none;
+    border-radius: 4px; /* Match the input border-radius */
     cursor: pointer;
-    font-size: 18px;
 }
 
-.auth-container button:hover {
-    background-color: #4cae4c; /* A darker shade for hover effect */
+/* Hover effect for button */
+.auth-container button[type='submit']:hover {
+    background-color: #218838; /* A darker shade for the button on hover */
 }
 
+/* Additional link styling if needed */
 .auth-container a {
-    color: #5cb85c;
+    display: block;
+    color: #007bff; /* Bootstrap primary color for links */
+    margin-top: 15px; /* Space above the link */
     text-decoration: none;
     font-size: 16px;
 }
@@ -54,5 +58,3 @@
 .auth-container a:hover {
     text-decoration: underline;
 }
-
-/* Additional styling can be done here if needed */

@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
-from foodieshare.models import *
+from foodieshare.models import*
+from foodieshare.forms import Post_Form, UserRegisterForm
+from django.contrib import messages
+
 
 
 def main_feed(request):
@@ -9,18 +12,37 @@ def main_feed(request):
     context_dict = {"posts": posts, "likes": likes}
     return render(request, 'foodieshare/main_feed.html', context=context_dict)
 
-
 def my_profile(request):
-    return render(request, 'foodieshare/my_profile.html')
+    user_profile = UserProfile.objects.get(auth_user=request.user)
 
+    if request.method == 'POST':
+        post_form = Post_Form(request.POST, request.FILES)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+            post.user = user_profile 
+            post.save()
+            return redirect('foodieshare:main_feed')
+    else:
+        post_form = Post_Form() 
+
+    context = {'user_profile': user_profile, 'post_form': post_form}
+    return render(request, 'foodieshare/my_profile.html', context)
 
 def user_profile(request):
     return render(request, 'foodieshare/user_profile.html')
 
 
 def register(request):
-    return render(request, 'foodieshare/register.html')
-
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('foodieshare:login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'foodieshare/register.html', {'form': form})
 
 def login(request):
     return render(request, 'foodieshare/login.html')

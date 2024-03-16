@@ -28,6 +28,8 @@
             <label for="recipe">Recipe:</label>
             <textarea id="recipe" name="recipe"></textarea>
         </div>
+            {% csrf_token %}
+            {{ post_form.as_p }}
         <button type="submit">Submit Post</button>
     </form>
 </div>

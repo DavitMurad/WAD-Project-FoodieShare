@@ -16,9 +16,14 @@
                 <a href="{% url 'main_feed' %}">FOODIESHARE</a>
             </div>
             <div class="navbar-links">
+                {% if user.is_authenticated %}
+                <a href="{% url 'foodieshare:my_profile' %}">Profile</a>
+                
+                {% else %}
                 <a href="{% url 'foodieshare:my_profile' %}">Profile</a>
                 <a href="{% url 'foodieshare:register' %}">Register</a>
                 <a href="{% url 'foodieshare:login' %}">Login</a>
+                {% endif %}
             </div>
             <div class="search-bar">
                 <input type="text" id = "searchInput" placeholder="Search..." >
@@ -52,6 +57,7 @@
     {% endfor %}
     </div>
     <script src="{% static 'foodieshare/js/main_feed.js' %}"></script>
+
 </body>
 
 </html>

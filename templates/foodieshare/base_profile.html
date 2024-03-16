@@ -16,7 +16,10 @@
                 <a href="{% url 'main_feed' %}">FOODIESHARE</a>
             </div>
             <div class="navbar-links">
-                <button type="submit">Logout</button>
+                <form action="{% url 'foodieshare:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="Logout">Logout</button>
+                </form>
                 <!-- Add other links as necessary -->
             </div>
             <!-- The search bar can be added here if needed -->

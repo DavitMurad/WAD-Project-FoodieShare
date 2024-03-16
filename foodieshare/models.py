@@ -19,6 +19,7 @@ class Post(models.Model):
     nutrition = models.TextField()
     recipe = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
     def __str__(self):
         return f"Post {self.id} by {self.user.auth_user.username}"
