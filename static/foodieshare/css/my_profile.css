@@ -1,16 +1,20 @@
 .profile-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 40px auto;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    background: #fff;
 }
 
 .user-info {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .profile-pic {
@@ -31,7 +35,11 @@
 }
 
 .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
     margin-bottom: 15px;
+    align-items: flex-start; 
 }
 
 .form-group label {
@@ -41,26 +49,63 @@
 
 .form-group input[type="file"],
 .form-group textarea {
-    width: 100%;
-    padding: 8px;
+    width: 100%; 
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .form-group textarea {
-    height: 100px;
+    height: 120px; 
     resize: vertical;
 }
 
 button[type="submit"] {
-    padding: 10px 15px;
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
+    width: auto; 
 }
 
-button[type="Logout"]:hover {
+button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+.input-file-container {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+.input-file-trigger {
+    display: block;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.input-file + label {
+    cursor: pointer;
+}
+
+.input-file:focus + label,
+.input-file + label:hover {
+    background-color: #ddd;
 }

@@ -15,8 +15,8 @@
         <p>{{ user.bio }}</p>
     </div>
     <form method="post" enctype="multipart/form-data" class="post-form">
-        {% csrf_token %}
-        <div class="form-group">
+        
+        <!-- <div class="form-group">
             <label for="imageUpload">Upload Image:</label>
             <input type="file" id="imageUpload" name="image">
         </div>
@@ -27,10 +27,12 @@
         <div class="form-group">
             <label for="recipe">Recipe:</label>
             <textarea id="recipe" name="recipe"></textarea>
-        </div>
-            {% csrf_token %}
-            {{ post_form.as_p }}
+        </div> -->
+        {% csrf_token %}
+        {{ post_form.as_p }}
         <button type="submit">Submit Post</button>
+        <button type="submit" name="profile_form">Change Profile Picture</button>
+
     </form>
 </div>
 {% endblock %}

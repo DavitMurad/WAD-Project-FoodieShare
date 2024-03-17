@@ -9,7 +9,7 @@
 
 <div class="auth-container">
     <h2>Register</h2>
-    <form method="post" action="{% url 'foodieshare:register' %}">
+    <form method="post" action="{% url 'foodieshare:register' %} " enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Register</button>

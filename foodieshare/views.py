@@ -1,33 +1,46 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from foodieshare.models import*
-from foodieshare.forms import Post_Form, UserRegisterForm
+from foodieshare.forms import PostForm, UserRegisterForm, UserProfileForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 
 
 def main_feed(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-created_at')
     likes = Like.objects.all()
     context_dict = {"posts": posts, "likes": likes}
     return render(request, 'foodieshare/main_feed.html', context=context_dict)
 
+@login_required
 def my_profile(request):
-    user_profile = UserProfile.objects.get(auth_user=request.user)
-
+    user_profile, created = UserProfile.objects.get_or_create(auth_user=request.user)
     if request.method == 'POST':
-        post_form = Post_Form(request.POST, request.FILES)
-        if post_form.is_valid():
-            post = post_form.save(commit=False)
-            post.user = user_profile 
-            post.save()
-            return redirect('foodieshare:main_feed')
+        if 'post_form' in request.POST:  # Check if we're submitting a post
+            post_form = PostForm(request.POST, request.FILES)
+            if post_form.is_valid():
+                new_post = post_form.save(commit=False)
+                new_post.user = user_profile
+                new_post.save()
+                messages.success(request, "Your post has been created!")
+                return redirect('foodieshare:main_feed')
+        elif 'profile_form' in request.POST:  # Check if we're updating the profile picture
+            profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, "Your profile has been updated!")
+                return redirect('foodieshare:my_profile')
     else:
-        post_form = Post_Form() 
+        post_form = PostForm()
+        profile_form = UserProfileForm(instance=user_profile)
 
-    context = {'user_profile': user_profile, 'post_form': post_form}
-    return render(request, 'foodieshare/my_profile.html', context)
-
+    return render(request, 'foodieshare/my_profile.html', {
+        'user_profile': user_profile,
+        'post_form': post_form,
+        'profile_form': profile_form,
+    })
 def user_profile(request):
     return render(request, 'foodieshare/user_profile.html')
 

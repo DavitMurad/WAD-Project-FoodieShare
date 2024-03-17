@@ -9,22 +9,22 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-def create_user(username, email, password, date_of_birth, bio, profile_picture_path):
+def create_user(username, email, password, date_of_birth, bio, profile_picture):
     user = User.objects.create_user(
         username=username, email=email, password=password)
     user_profile = UserProfile.objects.create(
         auth_user=user,
         date_of_birth=date_of_birth,
         bio=bio,
-        profile_picture_path=profile_picture_path
+        profile_picture=profile_picture
     )
     return user_profile
 
 
-def create_post(user_profile, post_image_path, nutrition, recipe):
+def create_post(user_profile, post_image, nutrition, recipe):
     post = Post.objects.create(
         user=user_profile,
-        post_image_path=post_image_path,
+        post_image=post_image,
         nutrition=nutrition,
         recipe=recipe,
         created_at=timezone.now()
@@ -60,13 +60,13 @@ def populate_database(num_users=5, posts_per_user=3, comments_per_post=2, likes_
             password='testpassword123',
             date_of_birth='1990-01-01',
             bio=f'User {i} bio...',
-            profile_picture_path='path/to/default/profile_pic.jpg'
+            profile_picture='path/to/default/profile_pic.jpg'
         )
 
         for j in range(posts_per_user):
             post = create_post(
                 user_profile=user_profile,
-                post_image_path='path/to/default/post_image.jpg',
+                post_image='path/to/default/post_image.jpg',
                 nutrition='Nutrition information...',
                 recipe=f'Recipe details for post {j}...'
             )

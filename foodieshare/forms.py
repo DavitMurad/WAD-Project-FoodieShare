@@ -13,7 +13,7 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
         
 
-class Post_Form(forms.ModelForm):
+class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['post_image', 'nutrition', 'recipe']
@@ -21,3 +21,9 @@ class Post_Form(forms.ModelForm):
             'nutrition': forms.Textarea(attrs={'rows': 3}),
             'recipe': forms.Textarea(attrs={'rows': 3}),
         }
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_picture']

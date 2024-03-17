@@ -20,7 +20,6 @@
                 <a href="{% url 'foodieshare:my_profile' %}">Profile</a>
                 
                 {% else %}
-                <a href="{% url 'foodieshare:my_profile' %}">Profile</a>
                 <a href="{% url 'foodieshare:register' %}">Register</a>
                 <a href="{% url 'foodieshare:login' %}">Login</a>
                 {% endif %}
@@ -39,7 +38,7 @@
                 <span class="username" id = "userID">{{ post.user.auth_user.username }}</span>
             </a>
             <a href="https://www.instagram.com/">
-                <img src="{% static 'foodieshare/images/meal.jpg' %}" alt="Post image">
+                <img src="{{ post.post_image.url }}" alt="Post image">
             </a>
             <p>{{ post.recipe }}</p>
             <div class="interactions">

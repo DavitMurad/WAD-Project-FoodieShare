@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
+from datetime import date
 
 
 class UserProfile(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(default=date.today)
     bio = models.CharField(max_length=20)
-    profile_picture= models.ImageField(default = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg")
+    profile_picture= models.ImageField(upload_to='profile_pic/', default='user.jpg')
 
     def __str__(self):
         return self.auth_user.username
@@ -15,11 +16,10 @@ class UserProfile(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(
         UserProfile, related_name='posts', on_delete=models.CASCADE)
-    post_image= models.ImageField(default = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg")
+    post_image = models.ImageField(upload_to='post_images/', default='example.jpg')
     nutrition = models.TextField()
     recipe = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
 
     def __str__(self):
         return f"Post {self.id} by {self.user.auth_user.username}"

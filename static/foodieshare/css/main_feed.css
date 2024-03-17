@@ -1,84 +1,73 @@
+/* main_feed.css */
 
-/* Main Feed Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
 .main-feed {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .post {
-  background: #fff;
+  width: 300px; /* Adjust width as needed */
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.post > img {
+.post img {
   width: 100%;
-  display: block;
   height: auto;
-  max-height: 300px;
-  object-fit: cover;
 }
 
-
-.user-info, .post > a {
-  display: block;
-  text-decoration: none;
-  color: inherit;
+.user-info {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.user-info:hover, .post > a:hover {
-  opacity: 0.8;
-}
-
-.profile-pic {
-  width: 50px;
+.user-info img.profile-pic {
+  width: 50px; /* Profile picture size */
   height: 50px;
   border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
 }
 
-.username {
+.user-info .username {
   font-weight: bold;
 }
 
-.post p {
-  padding: 15px;
-  margin: 0;
-  font-size: 0.9rem;
-  border-top: 1px solid #ddd;
+.post .content {
+  padding: 10px;
 }
 
 .interactions {
-  padding: 10px 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.9rem;
+  padding: 10px;
   border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.interactions span {
+.interactions .likes,
+.interactions .comments {
   cursor: pointer;
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
-.likes:before, .comments:before {
-  margin-right: 8px;
-  font-size: 1.2rem;
-}
-
-.likes:before {
+/* Add icons or style text for likes/comments */
+.interactions .likes:before {
   content: '❤️';
 }
 
-.comments:before {
+.interactions .comments:before {
   content: '💬';
 }
