@@ -33,8 +33,8 @@
     <div class="main-feed">
         {% for post in posts %}
         <div class="post" data-username="{{ post.user.auth_user.username  }}" data-recipe="{{ post.recipe }}">
-            <a href="{% url 'foodieshare:user_profile' %}" class="user-info">
-                <img class="profile-pic" src="{% static 'foodieshare/images/user.jpg' %}" alt="{{ post.user.auth_user.username }}">
+            <a href="{% url 'foodieshare:user_profile' username=user %}" class="user-info">
+                <img class="profile-pic" src="{{ post.user.profile_picture.url  }}" alt="{{ post.user.auth_user.username }}">
                 <span class="username" id = "userID">{{ post.user.auth_user.username }}</span>
             </a>
             <a href="https://www.instagram.com/">

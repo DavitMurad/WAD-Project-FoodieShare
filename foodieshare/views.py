@@ -1,10 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from foodieshare.models import*
+from foodieshare.models import *
 from foodieshare.forms import PostForm, UserRegisterForm, UserProfileForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 
 
@@ -14,11 +15,17 @@ def main_feed(request):
     context_dict = {"posts": posts, "likes": likes}
     return render(request, 'foodieshare/main_feed.html', context=context_dict)
 
+
 @login_required
 def my_profile(request):
-    user_profile, created = UserProfile.objects.get_or_create(auth_user=request.user)
+    user_profile, _ = UserProfile.objects.get_or_create(auth_user=request.user)
+    post_form = PostForm()
+    profile_form = UserProfileForm(instance=user_profile)
+
     if request.method == 'POST':
-        if 'post_form' in request.POST:  # Check if we're submitting a post
+        form_type = request.POST.get('form_type', '')
+
+        if form_type == 'post_form':
             post_form = PostForm(request.POST, request.FILES)
             if post_form.is_valid():
                 new_post = post_form.save(commit=False)
@@ -26,23 +33,26 @@ def my_profile(request):
                 new_post.save()
                 messages.success(request, "Your post has been created!")
                 return redirect('foodieshare:main_feed')
-        elif 'profile_form' in request.POST:  # Check if we're updating the profile picture
-            profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+        elif form_type == 'profile_form':
+            profile_form = UserProfileForm(
+                request.POST, request.FILES, instance=user_profile)
             if profile_form.is_valid():
                 profile_form.save()
                 messages.success(request, "Your profile has been updated!")
                 return redirect('foodieshare:my_profile')
-    else:
-        post_form = PostForm()
-        profile_form = UserProfileForm(instance=user_profile)
 
-    return render(request, 'foodieshare/my_profile.html', {
+    context = {
         'user_profile': user_profile,
         'post_form': post_form,
         'profile_form': profile_form,
-    })
-def user_profile(request):
-    return render(request, 'foodieshare/user_profile.html')
+    }
+    return render(request, 'foodieshare/my_profile.html', context)
+
+@login_required
+def user_profile(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    return render(request, 'foodieshare/user_profile.html', {'profile_user': profile_user})
 
 
 def register(request):
@@ -57,6 +67,7 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'foodieshare/register.html', {'form': form})
 
+
 def login(request):
     return render(request, 'foodieshare/login.html')
 
@@ -70,3 +81,18 @@ def add_comment_to_post(request, post_id):
         comment.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def toggle_like(request):
+    if request.method == 'POST' and request.is_ajax():
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+        like, created = Like.objects.get_or_create(post=post, user=request.user)
+
+        if not created:
+            like.delete()  # If like exists, remove it
+            action = 'unliked'
+        else:
+            action = 'liked'
+
+        return JsonResponse({'status': 'success', 'action': action})
+    return JsonResponse({'status': 'failed'})

@@ -1,73 +1,84 @@
-/* main_feed.css */
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+/* Main Feed Styles */
 
 .main-feed {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  justify-content: center;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .post {
-  width: 300px; /* Adjust width as needed */
+  background: #fff;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.post img {
+.post > img {
   width: 100%;
+  display: block;
   height: auto;
+  max-height: 300px;
+  object-fit: cover;
 }
 
-.user-info {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+
+.user-info, .post > a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
-.user-info img.profile-pic {
-  width: 50px; /* Profile picture size */
+.user-info:hover, .post > a:hover {
+  opacity: 0.8;
+}
+
+.profile-pic {
+  width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
 }
 
-.user-info .username {
+.username {
   font-weight: bold;
 }
 
-.post .content {
-  padding: 10px;
+.post p {
+  padding: 15px;
+  margin: 0;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
 }
 
 .interactions {
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  padding: 10px 15px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
 }
 
-.interactions .likes,
-.interactions .comments {
+.interactions span {
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
 }
 
-/* Add icons or style text for likes/comments */
-.interactions .likes:before {
+.likes:before, .comments:before {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.likes:before {
   content: '❤️';
 }
 
-.interactions .comments:before {
+.comments:before {
   content: '💬';
 }

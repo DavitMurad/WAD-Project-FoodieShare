@@ -7,7 +7,9 @@
 <div class="profile-container">
     <div class="user-info">
         <img class="profile-pic" src="{% static 'foodieshare/images/user.jpg' %}" alt="{{ post.user.auth_user.username }}">
-        <h2>{{ user.username }}</h2>
-        <p>{{ user.userprofile.bio }}</p>
+        <h2>User Profile: {{ profile_user.username }}</h2>
+        <p>Full Name: {{ profile_user.get_full_name }}</p>
+        <p>Email: {{ profile_user.email }}</p>
+
     </div>
     {% endblock %}

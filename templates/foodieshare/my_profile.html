@@ -4,35 +4,28 @@
 {% block title %}My Profile{% endblock %}
 
 {% block content %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/my_profile.css' %}">
-
 
 <div class="profile-container">
     <div class="user-info">
-        <img class="profile-pic" src="{% static 'foodieshare/images/user.jpg' %}" alt="{{ post.user.auth_user.username }}">
+         <img class="profile-pic" src="{{ user_profile.profile_picture.url }}" alt="Profile Picture">
         <h2>{{ user.username }}</h2>
         <p>{{ user.bio }}</p>
-    </div>
+    </div> <!-- Ensure this div is closed before starting the profile picture update form -->
+
+    <!-- Profile Picture Update Form -->
+    <form method="post" enctype="multipart/form-data" class="profile-picture-form">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="profile_form">
+
+        {{ profile_form.as_p }}
+        <button type="submit" name="profile_form">Update Profile Picture</button>
+    </form>
+
     <form method="post" enctype="multipart/form-data" class="post-form">
-        
-        <!-- <div class="form-group">
-            <label for="imageUpload">Upload Image:</label>
-            <input type="file" id="imageUpload" name="image">
-        </div>
-        <div class="form-group">
-            <label for="nutrition">Nutrition:</label>
-            <textarea id="nutrition" name="nutrition"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="recipe">Recipe:</label>
-            <textarea id="recipe" name="recipe"></textarea>
-        </div> -->
         {% csrf_token %}
         {{ post_form.as_p }}
-        <button type="submit">Submit Post</button>
-        <button type="submit" name="profile_form">Change Profile Picture</button>
-
+        <button type="submit" name="form_type" value="post_form">Submit Post</button>
     </form>
 </div>
 {% endblock %}
