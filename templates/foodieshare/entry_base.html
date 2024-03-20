@@ -15,6 +15,14 @@
             <div class="logo">
                 <a href="{% url 'main_feed' %}">FOODIESHARE</a>
             </div>
+            <div class="navbar-links">
+                {% block navbar_links %}
+                <!-- Default links; these will be overridden in child templates if necessary -->
+                <a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
+                <a href="{% url 'foodieshare:register' %}">Register</a>
+                <a href="{% url 'foodieshare:login' %}">Login</a>
+                {% endblock %}
+            </div>
     </header>
     <main>
         {% block content %}

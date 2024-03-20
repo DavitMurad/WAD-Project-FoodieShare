@@ -3,6 +3,11 @@
 
 {% block title %}Register{% endblock %}
 
+{% block navbar_links %}
+<a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
+<a href="{% url 'foodieshare:login' %}">Login</a>
+{% endblock %}
+
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/entry.css' %}">
@@ -14,7 +19,6 @@
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
-        <a href="{% url 'foodieshare:login' %}">Login</a>
     </form>
 </div>
 {% endblock %}

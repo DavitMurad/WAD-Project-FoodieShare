@@ -9,8 +9,17 @@
 
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Changed from space-between to center */
     align-items: center;
+    position: relative;
+    height: 20px;
+}
+
+.logo {
+    position: absolute;
+    left: 20px; /* Adjust if necessary to fit your layout */
+    top: 50%; 
+    transform: translateY(-50%);
 }
 
 .logo a {
@@ -18,6 +27,15 @@
     font-weight: bold;
     text-decoration: none;
     color: #333;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 20px; /* Provides spacing between the links */
 }
 
 .navbar-links a, .search-bar button {
@@ -31,7 +49,10 @@
 }
 
 .search-bar {
+    position: absolute;
+    right: 20px; /* Align the search bar to the right with some padding */
     display: flex;
+    align-items: center;
 }
 
 .search-bar input[type="text"] {
