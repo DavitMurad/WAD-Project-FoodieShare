@@ -97,3 +97,6 @@ def toggle_like(request):
 
         return JsonResponse({'status': 'success', 'action': action})
     return JsonResponse({'status': 'failed'})
+
+def about(request):
+    return render(request, 'foodieshare/about.html')

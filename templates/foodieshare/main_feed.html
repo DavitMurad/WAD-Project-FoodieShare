@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/header.css' %}">
 
     <title>Main Feed</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>    
@@ -23,6 +24,7 @@
                 {% else %}
                 <a href="{% url 'foodieshare:register' %}">Register</a>
                 <a href="{% url 'foodieshare:login' %}">Login</a>
+                <a href="{% url 'foodieshare:about' %}">About</a>
                 {% endif %}
             </div>
             <div class="search-bar">
@@ -51,6 +53,7 @@
     {% endfor %}
     </div>
     <script src="{% static 'foodieshare/js/main_feed.js' %}"></script>
+    <script src="{% static 'foodieshare/js/hover.js' %}"></script>
 </body>
 </html>
 <!-- <!DOCTYPE html>

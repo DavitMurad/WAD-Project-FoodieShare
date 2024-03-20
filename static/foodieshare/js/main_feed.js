@@ -30,3 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// jQuery to fade in elements on scroll
+$(window).scroll(function() {
+    $('.fade-in').each(function(){
+        var elementTop = $(this).offset().top;
+        var windowBottom = $(window).scrollTop() + $(window).height();
+        if (elementTop < windowBottom) {
+            $(this).animate({ opacity: 1 }, 1500);
+        }
+    });
+});

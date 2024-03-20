@@ -1,0 +1,33 @@
+{% extends 'foodieshare/entry_base.html' %}
+{% load static %}
+
+{% block title %}About FoodieShare{% endblock %}
+
+{% block navbar_links %}
+<a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
+<a href="{% url 'foodieshare:register' %}">Register</a>
+<a href="{% url 'foodieshare:login' %}">Login</a>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/entry.css' %}">
+
+<div class="about-container">
+    <h2>About FoodieShare</h2>
+    <p>
+        FoodieShare is a community-driven platform where food lovers can come together to share and discover amazing recipes from around the world. Whether you're a professional chef or a home cook, FoodieShare provides a space to showcase your culinary creations, share your food experiences, and connect with others who share your passion for food.
+    </p>
+    <p>
+        Our mission is to create a thriving online food community where users can:
+        <ul>
+            <li>Post photos and videos of their food and dishes.</li>
+            <li>Share recipes and culinary tips with others.</li>
+            <li>Engage with fellow food enthusiasts through likes, comments, and ratings.</li>
+            <li>Discover new flavors, ingredients, and techniques to try in their own kitchens.</li>
+        </ul>
+    </p>
+    <p>
+        From savory meals to sweet treats, FoodieShare is the perfect destination for anyone looking to enrich their cooking experience and explore the vast world of gastronomy. Join us today and start sharing your gastronomic journey!
+    </p>
+</div>
+{% endblock %}

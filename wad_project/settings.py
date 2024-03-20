@@ -35,6 +35,7 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 
 LOGIN_REDIRECT_URL = 'foodieshare:main_feed'
 LOGOUT_REDIRECT_URL = 'foodieshare:main_feed'
+ABOUT_REDIRECT_URL = 'foodieshare:main_feed'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
