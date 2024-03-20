@@ -99,4 +99,14 @@ def toggle_like(request):
     return JsonResponse({'status': 'failed'})
 
 def about(request):
-    return render(request, 'foodieshare/about.html')
+    total_recipes_shared = Post.objects.count()  # Get the total number of recipes
+    # Assuming a community goal of 1000 recipes
+    goal = 1000
+    progress_percentage = (total_recipes_shared / goal) * 100
+
+    context = {
+        'total_recipes_shared': total_recipes_shared,
+        'goal': goal,
+        'progress_percentage': progress_percentage,
+    }
+    return render(request, 'foodieshare/about.html', context)
