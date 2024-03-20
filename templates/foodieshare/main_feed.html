@@ -1,4 +1,59 @@
+
 <!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/main_feed.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/header.css' %}">
+
+    <title>Main Feed</title>
+</head>
+
+<body>    
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'main_feed' %}">FOODIESHARE</a>
+            </div>
+            <div class="navbar-links">
+                {% if user.is_authenticated %}
+                <a href="{% url 'foodieshare:my_profile' %}">Profile</a>
+                
+                {% else %}
+                <a href="{% url 'foodieshare:register' %}">Register</a>
+                <a href="{% url 'foodieshare:login' %}">Login</a>
+                {% endif %}
+            </div>
+            <div class="search-bar">
+                <input type="text" id = "searchInput" placeholder="Search..." >
+                <button type="submit" id="searchButton">Search</button>
+            </div>
+        </nav>
+    </header>
+    <div class="main-feed">
+        {% for post in posts %}
+        <div class="post" data-username="{{ post.user.auth_user.username  }}" data-recipe="{{ post.recipe }}">
+            <a href="{% url 'foodieshare:user_profile' username=user %}" class="user-info">
+                <img class="profile-pic" src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'foodieshare/images/user.jpg' %}{% endif %}" alt="{{ post.user.auth_user.username }} profile picture">
+                <span class="username" id = "userID">{{ post.user.auth_user.username }}</span>
+            </a>
+            <a href="https://www.instagram.com/">
+                <img src="{% if post.post_image %}{{ post.post_image.url }}{% else %}{% static 'foodieshare/images/meal.jpg' %}{% endif %}" alt="Post image">
+            </a>
+            </a>
+            <p>{{ post.recipe }}</p>
+            <div class="interactions">
+                <span class="likes">{{ post.likes.all.count }}</span>
+                <span class="comments">{{ post.comments.all.count }}</span>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <script src="{% static 'foodieshare/js/main_feed.js' %}"></script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
 {% load staticfiles %}
 <html>
 
@@ -59,4 +114,4 @@
 
 </body>
 
-</html>
+</html> -->

@@ -16,7 +16,7 @@ class UserProfile(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(
         UserProfile, related_name='posts', on_delete=models.CASCADE)
-    post_image = models.ImageField(upload_to='post_images/', default='example.jpg')
+    post_image = models.ImageField(upload_to='post_images/', default='meal.jpg')
     nutrition = models.TextField()
     recipe = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
