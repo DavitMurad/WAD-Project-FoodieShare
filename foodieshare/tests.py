@@ -1,6 +1,7 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, Client
 from django.db.utils import IntegrityError
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 from datetime import date
 from django.contrib.auth.models import User
 from foodieshare.models import UserProfile
@@ -8,8 +9,9 @@ from foodieshare.models import Post
 from foodieshare.models import Comment
 from foodieshare.models import Like
 from foodieshare.views import main_feed
+from foodieshare.views import my_profile
 
-class UserProfileTestCase(TestCase):
+class UserProfileModelTestCase(TestCase):
     def test_profile_creation(self):
         user = User.objects.create(username='testuser')
         profile = UserProfile.objects.create(auth_user=user, bio='test bio')
@@ -52,7 +54,7 @@ class UserProfileTestCase(TestCase):
         self.assertEqual(profile.profile_picture.name, 'user.jpg')
 
 
-class PostTestCase(TestCase):
+class PostModelTestCase(TestCase):
     def test_post_creation(self):
         user = User.objects.create(username='testuser')
         user_profile = UserProfile.objects.create(auth_user=user)
@@ -89,7 +91,7 @@ class PostTestCase(TestCase):
         self.assertEqual(post.post_image.name, 'meal.jpg')
 
 
-class CommentTestCase(TestCase):
+class CommentModelTestCase(TestCase):
     def test_comment_creation(self):
         user = User.objects.create(username='testuser')
         user_profile = UserProfile.objects.create(auth_user=user)
@@ -122,7 +124,7 @@ class CommentTestCase(TestCase):
             Comment.objects.get(pk=comment.pk)
 
 
-class LikeTestCase(TestCase):
+class LikeModelTestCase(TestCase):
     def test_like_creation(self):
         user = User.objects.create(username='testuser')
         user_profile = UserProfile.objects.create(auth_user=user)
@@ -165,14 +167,66 @@ class LikeTestCase(TestCase):
 
 class MainFeedViewTestCase(TestCase):
     def setUp(self):
-        self.factory = RequestFactory()
+        self.client = Client()
         self.user = User.objects.create(username='testuser')
-        self.post = Post.objects.create(user= self.user, nutrition='test nutrition', recipe='test recipe')
+        self.user_profile = UserProfile.objects.create(auth_user=self.user)
+        self.post = Post.objects.create(user= self.user_profile, nutrition='test nutrition', recipe='test recipe')
 
     def test_main_feed_view(self):
         url = reverse('main_feed')
-        request = self.factory.get(url)
-        response = main_feed(request)
+        response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'foodieshare/main_feed.html')
+
+        self.assertIn('posts', response.context)
+        self.assertIn('likes', response.context)
+
+
+class MyProfileViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
+    def test_my_profile_view(self):
+        url = reverse('foodieshare:my_profile')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'foodieshare/my_profile.html')
+
+        self.assertIn('post_form', response.context)
+        self.assertIn('profile_form', response.context)
+
+    def test_post_creation(self):
+        url = reverse('foodieshare:my_profile')
+        post_data = {
+            'form_type': 'post_form',
+            'nutrition': 'test nutrition',
+            'recipe': 'test recipe'
+        }
+        response = self.client.post(url, post_data, format='multipart')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Post.objects.filter(user=self.user.userprofile).exists())
+
+    def test_profile_update(self):
+        url = reverse('foodieshare:my_profile')
+
+        test_profile_image = SimpleUploadedFile (
+            name='meal.jpg',
+            content=open('static/foodieshare/images/meal.jpg', 'rb').read(),
+            content_type='image/jpeg'
+        )
+
+        profile_data = {
+            'form_type': 'profile_form',
+            'profile_picture': test_profile_image,
+        }
+
+        response = self.client.post(url, profile_data, format='multipart')
+        self.assertEqual(response.status_code, 302)
+
+        updated_profile = UserProfile.objects.get(auth_user=self.user)
+        self.assertEqual(updated_profile.profile_picture.name, 'meal.jpg')
