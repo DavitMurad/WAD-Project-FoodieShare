@@ -40,7 +40,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-STATIC_ROOT = '/home/foodieshare/wad_project/static'
+STATIC_ROOT = '/home/foodieshare/foodieshare/static'
 
 
 
