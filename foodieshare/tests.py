@@ -361,6 +361,32 @@ class ToggleLikeViewTestCase(TestCase):
         self.assertEqual(data['status'], 'failed')
 
 
+class AboutViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_about_view_render(self):
+        response = self.client.get(reverse('foodieshare:about'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'foodieshare/about.html')
+
+        self.assertIn('total_recipes_shared', response.context)
+        self.assertIn('goal', response.context)
+        self.assertIn('progress_percentage', response.context)
+
+
+class ContactViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_contact_view_render(self):
+        response = self.client.get(reverse('foodieshare:contact'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'foodieshare/contact.html')
+
+
 class UserRegisterTestFormTestCase(TestCase):
     def test_valid_form(self):
         form_data = {
