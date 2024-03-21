@@ -353,10 +353,12 @@ class ToggleLikeViewTestCase(TestCase):
 
     def test_invalid_requests(self):
         response = self.client.get(reverse('foodieshare:toggle_like'), {'post_id':self.post.id})
-        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(data['status'], 'failed')
 
         response = self.client.post(reverse('foodieshare:toggle_like'), {'post_id': self.post.id})
-        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(data['status'], 'failed')
 
 
 class UserRegisterTestFormTestCase(TestCase):

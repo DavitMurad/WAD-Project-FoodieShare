@@ -78,7 +78,7 @@ def add_comment_to_post(request, post_id):
     if request.method == "POST":
         content = request.POST.get('content')
         comment = Comment.objects.create(
-            post=post, author=request.user, content=content)
+            post=post, user=request.user.userprofile, content=content)
         comment.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -87,7 +87,7 @@ def toggle_like(request):
     if request.method == 'POST' and request.is_ajax():
         post_id = request.POST.get('post_id')
         post = Post.objects.get(id=post_id)
-        like, created = Like.objects.get_or_create(post=post, user=request.user)
+        like, created = Like.objects.get_or_create(post=post, user=request.user.userprofile)
 
         if not created:
             like.delete()  # If like exists, remove it
