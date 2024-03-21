@@ -25,7 +25,7 @@ SECRET_KEY = '2*)wb(at5=(#ys56hj!t$$y=cuf^fx^8v-qj0(wou-c06k@c!o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['foodieshare.pythonanywhere.com']
+ALLOWED_HOSTS = ["*"]
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
@@ -35,7 +35,6 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 
 LOGIN_REDIRECT_URL = 'foodieshare:main_feed'
 LOGOUT_REDIRECT_URL = 'foodieshare:main_feed'
-ABOUT_REDIRECT_URL = 'foodieshare:main_feed'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
