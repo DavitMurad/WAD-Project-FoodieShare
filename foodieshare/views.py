@@ -72,13 +72,12 @@ def register(request):
 def login(request):
     return render(request, 'foodieshare/login.html')
 
-@login_required
 def add_comment_to_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     if request.method == "POST":
         content = request.POST.get('content')
         comment = Comment.objects.create(
-            post=post, author=request.user, content=content)
+            post=post, user=request.user.userprofile, content=content)
         comment.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
