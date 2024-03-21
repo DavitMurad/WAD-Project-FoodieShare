@@ -10,6 +10,7 @@ from foodieshare.models import Comment
 from foodieshare.models import Like
 from foodieshare.forms import UserRegisterForm
 from foodieshare.forms import PostForm
+from foodieshare.forms import UserProfileForm
 import json
 
 class UserProfileModelTestCase(TestCase):
@@ -318,16 +319,6 @@ class AddCommentToPostViewTestCase(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Comment.objects.filter(post=self.post, user=self.user_profile, content='test content').exists())
-
-    #def test_add_comment_to_nonexistent_post(self):
-     #   url = reverse('foodieshare:add_comment_to_post', args=[999])
-     #   data = {'content': 'test content'}
-
-     #   self.client.login(username='testuser', password='testpassword')
-     #   response = self.client.post(url, data)
-
-     #   self.assertEqual(response.status_code, 302)
-     #    self.assertRedirects(response, '/') #logic not in place in code to redirect when adding to nonexistent post
         
 
 class ToggleLikeViewTestCase(TestCase):
@@ -380,7 +371,7 @@ class UserRegisterTestFormTestCase(TestCase):
 
         self.assertTrue(form.is_valid())
 
-        new_user = form.save()
+        new_user = form.save(commit=False)
         self.assertIsInstance(new_user, User)
         self.assertEqual(new_user.username, 'testuser')
         self.assertEqual(new_user.email, 'test@testuser.com')
@@ -399,5 +390,55 @@ class UserRegisterTestFormTestCase(TestCase):
         self.assertIn('username', form.errors)
         self.assertIn('email', form.errors)
         self.assertIn('password2', form.errors)
+
+
+class PostFormTestCase(TestCase):
+    def test_valid_form(self):
+        form_data = {
+            'post_image': 'testimage.jpg',
+            'nutrition': 'test nutrition',
+            'recipe': 'test recipe',
+        }
+        form = PostForm(data=form_data)
+
+        self.assertTrue(form.is_valid())
+
+        new_post = form.save(commit=False)
+        self.assertIsInstance(new_post, Post)
+        self.assertEqual(new_post.nutrition, 'test nutrition')
+        self.assertEqual(new_post.recipe, 'test recipe')
+
+    def test_invalid_form(self):
+        form_data = {}
+        form = PostForm(data=form_data)
+
+        self.assertFalse(form.is_valid())
+
+        self.assertIn('nutrition', form.errors)
+        self.assertIn('recipe', form.errors)
+
+    def test_form_widgets(self):
+        form = PostForm()
+
+        self.assertEqual(form.fields['nutrition'].widget.__class__.__name__, 'Textarea')
+        self.assertEqual(form.fields['nutrition'].widget.attrs.get('rows'), 3)
+
+        self.assertEqual(form.fields['recipe'].widget.__class__.__name__, 'Textarea')
+        self.assertEqual(form.fields['recipe'].widget.attrs.get('rows'), 3)
+
+
+class UserProfileFormTestCase(TestCase):
+    def test_valid_form(self):
+        test_image = open('static/foodieshare/images/meal.jpg', 'rb')
+        form_data = {
+            'profile_picture': SimpleUploadedFile('meal.jpg', test_image.read()),
+        }
+        form = UserProfileForm(data=form_data, files=form_data)
+
+        self.assertTrue(form.is_valid())
+
+        new_profile = form.save(commit=False)
+        self.assertIsInstance(new_profile, UserProfile)
+        self.assertEqual(new_profile.profile_picture.name[0:17], 'meal.jpg')
 
 
