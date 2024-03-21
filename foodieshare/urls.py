@@ -10,6 +10,7 @@ urlpatterns = [
     path('user_profile/', views.user_profile, name="user_profile"),
     path('register/', views.register, name='register'),
     path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
     path('login/', auth_views.LoginView.as_view(template_name='foodieshare/login.html'), name='login'),
     path('post/<int:post_id>/add_comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('logout/', auth_views.LogoutView.as_view(template_name='foodieshare/logout.html'), name='logout'),

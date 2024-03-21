@@ -1,0 +1,31 @@
+{% extends 'foodieshare/entry_base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - FoodieShare{% endblock %}
+
+{% block navbar_links %}
+<a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
+<a href="{% url 'foodieshare:register' %}">Register</a>
+<a href="{% url 'foodieshare:login' %}">Login</a>
+<a href="{% url 'foodieshare:about' %}">About</a>
+
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/contact.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/header.css' %}">
+
+<div class="contact-container">
+    <h2>Contact Us</h2>
+    <p>We love hearing from our community! Reach out to us with any questions, suggestions, or feedback.</p>
+
+    <!-- Contact Information -->
+    <div class="contact-info">
+        <h3>Our Office</h3>
+        <p>123 Foodie Lane<br>Delicious City, YUM 45678</p>
+        <p>Email: contact@foodieshare.com</p>
+        <p>Phone: (123) 456-7890</p>
+    </div>
+    
+</div>
+{% endblock %}

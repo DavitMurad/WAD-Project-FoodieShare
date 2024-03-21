@@ -110,3 +110,6 @@ def about(request):
         'progress_percentage': progress_percentage,
     }
     return render(request, 'foodieshare/about.html', context)
+
+def contact(request):
+    return render(request, 'foodieshare/contact.html')
