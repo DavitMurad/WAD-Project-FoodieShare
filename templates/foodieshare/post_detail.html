@@ -4,6 +4,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/post_detail.css' %}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+{% block navbar_links %}
+<a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
+<a href="{% url 'foodieshare:logout' %}">Logout</a>
+<a href="{% url 'foodieshare:about' %}">About</a>
+<a href="{% url 'foodieshare:contact' %}">Contact</a>
+{% endblock %}
+
 {% block content %}
 <div class="post-detail-container">
     <h1 class="post-title">{{ post.recipe }}</h1>
