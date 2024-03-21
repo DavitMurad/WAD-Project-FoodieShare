@@ -25,7 +25,7 @@ SECRET_KEY = '2*)wb(at5=(#ys56hj!t$$y=cuf^fx^8v-qj0(wou-c06k@c!o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['foodieshare.pythonanywhere.com']
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
