@@ -96,5 +96,4 @@ def toggle_like(request):
             action = 'liked'
 
         return JsonResponse({'status': 'success', 'action': action})
-    #return JsonResponse({'status': 'failed'})
-    return HttpResponseBadRequest()
+    return JsonResponse({'status': 'failed'})

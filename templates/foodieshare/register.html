@@ -6,11 +6,14 @@
 {% block navbar_links %}
 <a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
 <a href="{% url 'foodieshare:login' %}">Login</a>
+<a href="{% url 'foodieshare:about' %}">About</a>
+<a href="{% url 'foodieshare:contact' %}">Contact</a>
 {% endblock %}
 
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/entry.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/header.css' %}">
 
 <div class="auth-container">
     <h2>Register</h2>

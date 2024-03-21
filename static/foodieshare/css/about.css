@@ -1,0 +1,10 @@
+.carousel img {
+    max-width: 100%; /* ensures image is not bigger than its container */
+    height: auto; /* maintains the aspect ratio */
+}
+
+/* Or you can set specific dimensions */
+.carousel-item img {
+    width: 400px; /* Set your desired width */
+    height: auto; /* Adjusts height automatically to maintain aspect ratio */
+}

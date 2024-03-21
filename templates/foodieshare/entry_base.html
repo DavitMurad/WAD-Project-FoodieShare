@@ -6,8 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}FOODIESHARE{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     
-
 </head>
 <body>
     <header class="site-header">
@@ -21,6 +23,8 @@
                 <a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
                 <a href="{% url 'foodieshare:register' %}">Register</a>
                 <a href="{% url 'foodieshare:login' %}">Login</a>
+                <a href="{% url 'foodieshare:about' %}">About</a>
+                <a href="{% url 'foodieshare:contact' %}">Contact</a>
                 {% endblock %}
             </div>
     </header>
@@ -29,6 +33,7 @@
         <!-- Login or registration forms will go here -->
         {% endblock %}
     </main>
+    <script src="{% static 'foodieshare/js/hover.js' %}"></script>
 </body>
 </html>
 
