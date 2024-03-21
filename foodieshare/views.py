@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from foodieshare.models import *
 from foodieshare.forms import PostForm, UserRegisterForm, UserProfileForm
 from django.contrib import messages
@@ -72,13 +72,13 @@ def register(request):
 def login(request):
     return render(request, 'foodieshare/login.html')
 
-
+@login_required
 def add_comment_to_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     if request.method == "POST":
         content = request.POST.get('content')
         comment = Comment.objects.create(
-            post=post, author=request.user, content=content)
+            post=post, user=request.user.userprofile, content=content)
         comment.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -87,7 +87,7 @@ def toggle_like(request):
     if request.method == 'POST' and request.is_ajax():
         post_id = request.POST.get('post_id')
         post = Post.objects.get(id=post_id)
-        like, created = Like.objects.get_or_create(post=post, user=request.user)
+        like, created = Like.objects.get_or_create(post=post, user=request.user.userprofile)
 
         if not created:
             like.delete()  # If like exists, remove it
@@ -96,4 +96,5 @@ def toggle_like(request):
             action = 'liked'
 
         return JsonResponse({'status': 'success', 'action': action})
-    return JsonResponse({'status': 'failed'})
+    #return JsonResponse({'status': 'failed'})
+    return HttpResponseBadRequest()

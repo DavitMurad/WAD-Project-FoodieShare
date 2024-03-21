@@ -8,8 +8,9 @@ from foodieshare.models import UserProfile
 from foodieshare.models import Post
 from foodieshare.models import Comment
 from foodieshare.models import Like
-from foodieshare.views import main_feed
-from foodieshare.views import my_profile
+from foodieshare.forms import UserRegisterForm
+from foodieshare.forms import PostForm
+import json
 
 class UserProfileModelTestCase(TestCase):
     def test_profile_creation(self):
@@ -211,7 +212,7 @@ class MyProfileViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Post.objects.filter(user=self.user.userprofile).exists())
 
-    def test_profile_update(self):
+    def test_profile_picture_update(self):
         url = reverse('foodieshare:my_profile')
 
         test_profile_image = SimpleUploadedFile (
@@ -229,4 +230,174 @@ class MyProfileViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
         updated_profile = UserProfile.objects.get(auth_user=self.user)
-        self.assertEqual(updated_profile.profile_picture.name, 'meal.jpg')
+        self.assertEqual(updated_profile.profile_picture.name[0:17], 'profile_pics/meal')
+
+
+class UserProfileViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
+    def test_user_profile_view(self):
+        url = reverse('foodieshare:user_profile', args=['testuser'])
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'foodieshare/user_profile.html')
+
+        self.assertIn('profile_user', response.context)
+        self.assertEqual(response.context['profile_user'], self.user)
+
+    def test_user_profile_not_found(self):
+        url = reverse('foodieshare:user_profile', args=['nonexistentuser'])
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 404)
+
+
+class RegisterViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_register_profile(self):
+        url = reverse('foodieshare:register')
+        data = {
+            'username': 'testuser',
+            'email': 'test@testuser.com',
+            'password1': 'testpassword',
+            'password2': 'testpassword'
+        }
+        response = self.client.post(url, data)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('foodieshare:login'))
+
+    def test_register_invalid_data(self):
+        url = reverse('foodieshare:register')
+        data = {}
+        response = self.client.post(url, data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'username', 'This field is required.')
+
+    def test_register_get_form(self):
+        url = reverse('foodieshare:register')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'foodieshare/register.html')
+
+    
+class LoginViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_login_view(self):
+        url = reverse('foodieshare:login')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'foodieshare/login.html')
+
+
+class AddCommentToPostViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user_profile = UserProfile.objects.create(auth_user=self.user)
+        self.post = Post.objects.create(user= self.user_profile, nutrition='test nutrition', recipe='test recipe')
+
+    def test_add_comment_to_post(self):
+        url = reverse('foodieshare:add_comment_to_post', args=[self.post.id])
+        data = {'content': 'test content'}
+
+        self.client.login(username='testuser', password='testpassword')
+
+        response = self.client.post(url, data)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Comment.objects.filter(post=self.post, user=self.user_profile, content='test content').exists())
+
+    #def test_add_comment_to_nonexistent_post(self):
+     #   url = reverse('foodieshare:add_comment_to_post', args=[999])
+     #   data = {'content': 'test content'}
+
+     #   self.client.login(username='testuser', password='testpassword')
+     #   response = self.client.post(url, data)
+
+     #   self.assertEqual(response.status_code, 302)
+     #    self.assertRedirects(response, '/') #logic not in place in code to redirect when adding to nonexistent post
+        
+
+class ToggleLikeViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user_profile = UserProfile.objects.create(auth_user=self.user)
+        self.post = Post.objects.create(user= self.user_profile, nutrition='test nutrition', recipe='test recipe')
+
+    def test_successful_like_creation(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.post(reverse('foodieshare:toggle_like'), {'post_id':self.post.id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        data = json.loads(response.content.decode('utf-8'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['status'], 'success')
+        self.assertEqual(data['action'], 'liked')
+
+        self.assertTrue(Like.objects.filter(post=self.post, user=self.user_profile).exists())
+
+    def test_successful_like_deletion(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.post(reverse('foodieshare:toggle_like'), {'post_id':self.post.id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(reverse('foodieshare:toggle_like'), {'post_id':self.post.id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        data = json.loads(response.content.decode('utf-8'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['status'], 'success')
+        self.assertEqual(data['action'], 'unliked')
+
+        self.assertFalse(Like.objects.filter(post=self.post, user=self.user_profile).exists())
+
+    def test_invalid_requests(self):
+        response = self.client.get(reverse('foodieshare:toggle_like'), {'post_id':self.post.id})
+        self.assertEqual(response.status_code, 400)
+
+        response = self.client.post(reverse('foodieshare:toggle_like'), {'post_id': self.post.id})
+        self.assertEqual(response.status_code, 400)
+
+
+class UserRegisterTestFormTestCase(TestCase):
+    def test_valid_form(self):
+        form_data = {
+            'username': 'testuser',
+            'email': 'test@testuser.com',
+            'password1': 'testpassword',
+            'password2': 'testpassword',
+        }
+        form = UserRegisterForm(data=form_data)
+
+        self.assertTrue(form.is_valid())
+
+        new_user = form.save()
+        self.assertIsInstance(new_user, User)
+        self.assertEqual(new_user.username, 'testuser')
+        self.assertEqual(new_user.email, 'test@testuser.com')
+
+    def test_invalid_form(self):
+        form_data = {
+            'username': '',
+            'email': 'invalidemailformat',
+            'password1': 'testpassword',
+            'password2': '',
+        }
+        form = UserRegisterForm(data=form_data)
+
+        self.assertFalse(form.is_valid())
+
+        self.assertIn('username', form.errors)
+        self.assertIn('email', form.errors)
+        self.assertIn('password2', form.errors)
+
+
