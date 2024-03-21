@@ -16,9 +16,9 @@ class UserRegisterForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['post_image', 'nutrition', 'recipe']
+        fields = ['post_image', 'description', 'recipe']
         widgets = {
-            'nutrition': forms.Textarea(attrs={'rows': 3}),
+            'description': forms.Textarea(attrs={'rows': 3}),
             'recipe': forms.Textarea(attrs={'rows': 3}),
         }
 
@@ -27,3 +27,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['profile_picture']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']

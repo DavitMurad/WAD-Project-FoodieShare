@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from foodieshare.models import *
-from foodieshare.forms import PostForm, UserRegisterForm, UserProfileForm
+from foodieshare.forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -83,20 +83,26 @@ def add_comment_to_post(request, post_id):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-def toggle_like(request):
-    if request.method == 'POST' and request.is_ajax():
-        post_id = request.POST.get('post_id')
-        post = Post.objects.get(id=post_id)
-        like, created = Like.objects.get_or_create(post=post, user=request.user)
+
+def toggle_like(request, post_id):
+    # Your logic to toggle the like...
+    post = get_object_or_404(Post, pk=post_id)
+    liked = False  # A flag to track if the post is liked or unliked in this request
+
+    if request.method == 'POST':
+        user_profile = request.user.userprofile
+        like, created = Like.objects.get_or_create(post=post, user=user_profile)
 
         if not created:
-            like.delete()  # If like exists, remove it
-            action = 'unliked'
+            like.delete()  # Unlike the post
         else:
-            action = 'liked'
+            liked = True
 
-        return JsonResponse({'status': 'success', 'action': action})
-    return JsonResponse({'status': 'failed'})
+        total_likes = post.likes.count()
+
+        return JsonResponse({'liked': liked, 'total_likes': total_likes})
+
+    return JsonResponse({'error': 'Request must be POST.'}, status=400)
 
 def about(request):
     total_recipes_shared = Post.objects.count()  # Get the total number of recipes
@@ -110,6 +116,31 @@ def about(request):
         'progress_percentage': progress_percentage,
     }
     return render(request, 'foodieshare/about.html', context)
+
+@login_required
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.user = request.user.userprofile  # Adjust based on your user profile relation
+            comment.save()
+            return redirect('foodieshare:post_detail', post_id=post.id)
+    else:
+        comment_form = CommentForm()
+
+    # Check if current user has liked the post
+    user_like = None
+    if request.user.is_authenticated:
+        user_like = Like.objects.filter(post=post, user=request.user.userprofile).first()
+
+    return render(request, 'foodieshare/post_detail.html', {
+        'post': post,
+        'comment_form': comment_form,
+        'user_like': user_like
+    })
 
 def contact(request):
     return render(request, 'foodieshare/contact.html')

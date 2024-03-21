@@ -28,6 +28,12 @@
   object-fit: cover;
 }
 
+.post img {
+  max-width: 100%;  /* Ensures the image fits its container */
+  height: auto;  /* Maintains the aspect ratio */
+}
+
+
 
 .user-info, .post > a {
   display: block;

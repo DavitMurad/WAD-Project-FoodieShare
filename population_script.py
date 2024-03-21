@@ -21,11 +21,11 @@ def create_user(username, email, password, date_of_birth, bio, profile_picture):
     return user_profile
 
 
-def create_post(user_profile, post_image, nutrition, recipe):
+def create_post(user_profile, post_image, description, recipe):
     post = Post.objects.create(
         user=user_profile,
         post_image=post_image,
-        nutrition=nutrition,
+        description=description,
         recipe=recipe,
         created_at=timezone.now()
     )
@@ -67,7 +67,7 @@ def populate_database(num_users=5, posts_per_user=3, comments_per_post=2, likes_
             post = create_post(
                 user_profile=user_profile,
                 post_image='path/to/default/post_image.jpg',
-                nutrition='Nutrition information...',
+                description='description...',
                 recipe=f'Recipe details for post {j}...'
             )
 

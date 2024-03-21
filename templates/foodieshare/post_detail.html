@@ -1,0 +1,54 @@
+{% extends 'foodieshare/entry_base.html' %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'foodieshare/css/post_detail.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% block content %}
+<div class="post-detail-container">
+    <h1 class="post-title">{{ post.recipe }}</h1>
+    <img src="{{ post.post_image.url }}" alt="{{ post.recipe }}" class="img">
+    <p class="post-description"><strong>Description:</strong> {{ post.nutrition }}</p>
+    <p class="post-author"><strong>Posted by:</strong> {{ post.user.auth_user.username }}</p>
+    <div class="post-likes">
+        <strong>Likes:</strong> <span id="like-count-{{ post.id }}">{{ post.likes.count }} Likes</span>
+    </div>
+    {% comment %} <p id="like-count-{{ post.id }}">{{ post.likes.count }} Likes</p> {% endcomment %}
+    {% comment %} <p class="post-likes"><strong>Likes:</strong></p><p id="like-count-{{ post.id }}">{{ post.likes.count }}</p> {% endcomment %}
+
+    <button class="like-btn" data-post-id="{{ post.id }}" data-ajax-url="{% url 'foodieshare:toggle_like' post.id %}">
+        {% if user_like %}
+        Unlike
+        {% else %}
+        Like
+        {% endif %}
+    </button>
+    
+    
+    
+    <div class="comments-section">
+        <h2>Comments</h2>
+        
+        <!-- Comment form -->
+        <div class="comment-form">
+            <form method="post">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit">Submit Comment</button>
+            </form>
+        </div>
+        
+        <!-- List of comments -->
+        {% for comment in post.comments.all %}
+            <div class="comment">
+                <p><strong>{{ comment.user.auth_user.username }}:</strong> {{ comment.content }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+
+<script src="{% static 'foodieshare/js/likes.js' %}"></script>
+
+{% endblock %}

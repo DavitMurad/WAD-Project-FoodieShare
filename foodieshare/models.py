@@ -6,7 +6,7 @@ from datetime import date
 class UserProfile(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
     date_of_birth = models.DateField(default=date.today)
-    bio = models.CharField(max_length=20)
+    bio = models.CharField(max_length=255)
     profile_picture = models.ImageField(upload_to='profile_pics/', default='user.jpg')
 
     def __str__(self):
@@ -17,7 +17,7 @@ class Post(models.Model):
     user = models.ForeignKey(
         UserProfile, related_name='posts', on_delete=models.CASCADE)
     post_image = models.ImageField(upload_to='post_images/', default='meal.jpg')
-    nutrition = models.TextField()
+    description = models.TextField()
     recipe = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

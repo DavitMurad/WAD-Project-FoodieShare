@@ -1,0 +1,94 @@
+.post-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.post-image {
+    max-width: 5%;  
+    height: auto;  
+    display: block;  
+    margin: 0 auto;  
+    max-height: 50px;
+}
+.post-detail-container .post-image img {
+    max-width: 100%;  /* Prevents the image from exceeding the container's width */
+    height: auto;  /* Maintains aspect ratio */
+    display: block;  /* Ensures the image is a block-level element (centers if margin auto is used) */
+    margin: 0 auto;  /* Centers the image within its container */
+    max-height: 100%;  /* Caps the image's height to make it not too large */
+    border: 10px solid red;
+}
+
+.img {
+    width : 200px;
+    height : 300px;
+}
+
+/* .comments-section {
+    margin-top: 20px;
+}
+
+.comment {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc; /* Visual separation of comments 
+} */
+
+.post-title {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.post-description, .post-author, .post-likes {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+/* .comments-section h2 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+} */
+
+/* Style the comment form */
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form textarea {
+    width: 100%; /* Make textarea span the full width */
+    padding: 10px; /* Add some padding inside the textarea */
+    margin-bottom: 10px; /* Space below the textarea */
+    border-radius: 5px; /* Optional: Rounds the corners of the textarea */
+    border: 1px solid #ccc; /* Light grey border */
+}
+
+.comment-form button {
+    padding: 10px 15px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3; /* A slightly darker blue */
+}
+
+/* Style individual comments */
+.comment {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* A very light grey */
+    border: 1px solid #eee; /* A light grey border */
+}
+
+.comment p {
+    margin: 0; /* Removes default margin */
+}
+
+.comment strong {
+    color: #007bff; /* Makes the username stand out */
+}
