@@ -20,20 +20,18 @@
                     {% csrf_token %}
                     <button type="Logout">Logout</button>
                 </form>
-                <!-- Add other links as necessary -->
             </div>
-            <!-- The search bar can be added here if needed -->
         </nav>
     </header>
 
     <main>
         {% block content %}
-        <!-- This block will be overridden by child templates -->
+
         {% endblock %}
     </main>
 
     <footer>
-        <!-- Footer content -->
+
     </footer>
 
 </body>

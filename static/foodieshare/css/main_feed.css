@@ -17,7 +17,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 500px; /* Set a fixed height for each post */
+  height: 500px;
 }
 
 .post > img {
@@ -30,7 +30,7 @@
 
 .post img {
   max-width: 100%;  /* Ensures the image fits its container */
-  height: auto;  /* Maintains the aspect ratio */
+  height: auto;
 }
 
 

@@ -34,14 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
 $('.post').hover(
     function() { // Mouse over
         $(this).css({
-            'border-color': '#ffa726', // Or any highlight color
-            'box-shadow': '0 2px 5px rgba(0,0,0,0.2)' // Optional shadow for depth
+            'border-color': '#ffa726',
+            'box-shadow': '0 2px 5px rgba(0,0,0,0.2)'
         });
     },
     function() { // Mouse out
         $(this).css({
-            'border-color': '#ddd', // Revert to original border color
-            'box-shadow': 'none' // Remove shadow if added
+            'border-color': '#ddd',
+            'box-shadow': 'none'
         });
     }
 );
@@ -53,12 +53,10 @@ $(document).ready(function(){
         function() {
             // Mouse over
             var postElement = $(this); 
-            // Apply highlight styles
             postElement.css({
-                'border-color': '#ffa726', // Or any highlight color
-                'box-shadow': '0 2px 5px rgba(0,0,0,0.2)' // Optional shadow for depth
+                'border-color': '#ffa726',
+                'box-shadow': '0 2px 5px rgba(0,0,0,0.2)'
             });
-            // Set timeout to show notification
             hoverTimeout = setTimeout(function() {
                 showNotification("This looks delicious, press to see how to prepare this dish at home!", postElement);
             }, 3000); 
@@ -68,21 +66,19 @@ $(document).ready(function(){
             var postElement = $(this);
             // Revert styles
             postElement.css({
-                'border-color': '#ddd', // Revert to original border color
-                'box-shadow': 'none' // Remove shadow if added
+                'border-color': '#ddd',
+                'box-shadow': 'none'
             });
             clearTimeout(hoverTimeout);
-            $('#notification').stop(true).fadeOut(200); // Immediately hide the notification
+            $('#notification').stop(true).fadeOut(200); // hide the notification 
         }
     );
 
     function showNotification(message, postElement) {
-        // Show the notification
         var notification = $('#notification');
         notification.text(message).fadeIn(200).off("click").on("click", function() {
-            // Logic for what happens when the notification is clicked
-            window.location.href = postElement.data('recipe-url'); // Example action
-            $(this).fadeOut(200); // Optionally hide notification on click
+            window.location.href = postElement.data('recipe-url');
+            $(this).fadeOut(200);
         });
     }
 });

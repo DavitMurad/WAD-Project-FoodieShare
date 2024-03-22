@@ -1,22 +1,20 @@
-/* Adjustments for registration form */
 .auth-container form {
     margin-top: 30px; /* Add space on top of the form */
-    padding: 30px; /* Add more padding inside the form */
+    padding: 30px; 
     background: #ffffff;
     border: 1px solid #ccc; /* Make the border lighter */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    border-radius: 8px; /* Match border radius from screenshot */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-/* Style for the error messages */
 .errorlist {
     margin: 10px 0;
     padding: 10px;
-    background-color: #f8d7da; /* Light red background */
-    border: 1px solid #f5c6cb; /* Light red border */
-    border-radius: 4px; /* Slightly rounded borders for the error message */
-    color: #721c24; /* Dark red text color */
-    list-style-type: none; /* Remove bullet points */
+    background-color: #f8d7da; /* red background */
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+    list-style-type: none; 
 }
 
 /* Adjust the individual input fields for better spacing and alignment */
@@ -30,11 +28,11 @@
 
 /* Submit button styling */
 .auth-container button[type='submit'] {
-    margin-top: 20px; /* Space above the button */
-    padding: 10px 15px; /* Larger padding for a bigger button */
-    width: 100%; /* Full width button */
+    margin-top: 20px;
+    padding: 10px 15px;
+    width: 100%;
     font-size: 18px; /* Larger font size */
-    background-color: #28a745; /* Bootstrap success color for the button */
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px; /* Match the input border-radius */
@@ -43,14 +41,14 @@
 
 /* Hover effect for button */
 .auth-container button[type='submit']:hover {
-    background-color: #218838; /* A darker shade for the button on hover */
+    background-color: #218838;
 }
 
-/* Additional link styling if needed */
+
 .auth-container a {
     display: block;
-    color: #007bff; /* Bootstrap primary color for links */
-    margin-top: 15px; /* Space above the link */
+    color: #007bff;
+    margin-top: 15px;
     text-decoration: none;
     font-size: 16px;
 }

@@ -20,9 +20,6 @@
     <div class="post-likes">
         <strong>Likes:</strong> <span id="like-count-{{ post.id }}">{{ post.likes.count }} Likes</span>
     </div>
-    {% comment %} <p id="like-count-{{ post.id }}">{{ post.likes.count }} Likes</p> {% endcomment %}
-    {% comment %} <p class="post-likes"><strong>Likes:</strong></p><p id="like-count-{{ post.id }}">{{ post.likes.count }}</p> {% endcomment %}
-
     <button class="like-btn" data-post-id="{{ post.id }}" data-ajax-url="{% url 'foodieshare:toggle_like' post.id %}">
         {% if user_like %}
         Unlike
