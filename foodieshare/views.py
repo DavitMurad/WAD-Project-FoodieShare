@@ -49,8 +49,9 @@ def my_profile(request):
     }
     return render(request, 'foodieshare/my_profile.html', context)
 
+@login_required
 def user_profile(request, username):
-    profile_user = get_object_or_404(UserProfile, auth_user__username=username)
+    profile_user = get_object_or_404(User, username=username)
     return render(request, 'foodieshare/user_profile.html', {'profile_user': profile_user})
 
 
@@ -83,8 +84,9 @@ def add_comment_to_post(request, post_id):
 
 
 def toggle_like(request, post_id):
+    # Your logic to toggle the like...
     post = get_object_or_404(Post, pk=post_id)
-    liked = False 
+    liked = False  # A flag to track if the post is liked or unliked in this request
 
     if request.method == 'POST':
         user_profile = request.user.userprofile
@@ -103,6 +105,7 @@ def toggle_like(request, post_id):
 
 def about(request):
     total_recipes_shared = Post.objects.count()  # Get the total number of recipes
+    # Assuming a community goal of 1000 recipes
     goal = 1000
     progress_percentage = (total_recipes_shared / goal) * 100
 

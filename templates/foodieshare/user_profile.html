@@ -9,8 +9,8 @@
         {% else %}
             <img class="profile-pic" src="{% static 'foodieshare/images/default_user.jpg' %}" alt="{{ profile_user.auth_user.username }}">
         {% endif %}
-        <h2>User Profile: {{ profile_user.auth_user.username }}</h2>
-        <p>Email: {{ profile_user.auth_user.email }}</p>
+        <h2>User Profile: {{ profile_user.username }}</h2>
+        <p>Email: {{ profile_user.email }}</p>
     </div>
 </div>
 {% endblock %}
