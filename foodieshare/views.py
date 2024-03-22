@@ -49,9 +49,8 @@ def my_profile(request):
     }
     return render(request, 'foodieshare/my_profile.html', context)
 
-@login_required
 def user_profile(request, username):
-    profile_user = get_object_or_404(User, username=username)
+    profile_user = get_object_or_404(UserProfile, auth_user__username=username)
     return render(request, 'foodieshare/user_profile.html', {'profile_user': profile_user})
 
 

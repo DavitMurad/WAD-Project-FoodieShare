@@ -43,7 +43,7 @@
     <div class="main-feed">
         {% for post in posts %}
         <div class="post" data-username="{{ post.user.auth_user.username  }}" data-recipe="{{ post.recipe }}">
-            <a href="{% url 'foodieshare:user_profile' username=user %}" class="user-info">
+            <a href="{% url 'foodieshare:user_profile' username=post.user %}" class="user-info">
                 <img class="profile-pic" src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'foodieshare/images/user.jpg' %}{% endif %}" alt="{{ post.user.auth_user.username }} profile picture">
                 <span class="username" id = "userID">{{ post.user.auth_user.username }}</span>
             </a>
