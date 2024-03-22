@@ -84,9 +84,8 @@ def add_comment_to_post(request, post_id):
 
 
 def toggle_like(request, post_id):
-    # Your logic to toggle the like...
     post = get_object_or_404(Post, pk=post_id)
-    liked = False  # A flag to track if the post is liked or unliked in this request
+    liked = False 
 
     if request.method == 'POST':
         user_profile = request.user.userprofile
@@ -105,7 +104,6 @@ def toggle_like(request, post_id):
 
 def about(request):
     total_recipes_shared = Post.objects.count()  # Get the total number of recipes
-    # Assuming a community goal of 1000 recipes
     goal = 1000
     progress_percentage = (total_recipes_shared / goal) * 100
 

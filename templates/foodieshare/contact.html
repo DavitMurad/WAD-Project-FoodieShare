@@ -4,10 +4,20 @@
 {% block title %}Contact Us - FoodieShare{% endblock %}
 
 {% block navbar_links %}
+{% if user.is_authenticated %}
+<a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
+<a href="{% url 'foodieshare:about' %}">About</a>
+
+{% else %}
+
 <a href="{% url 'foodieshare:main_feed' %}">Main Feed</a>
 <a href="{% url 'foodieshare:register' %}">Register</a>
 <a href="{% url 'foodieshare:login' %}">Login</a>
 <a href="{% url 'foodieshare:about' %}">About</a>
+
+{% endif %}
+
+
 
 {% endblock %}
 

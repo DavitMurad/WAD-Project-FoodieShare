@@ -468,5 +468,3 @@ class UserProfileFormTestCase(TestCase):
         new_profile = form.save(commit=False)
         self.assertIsInstance(new_profile, UserProfile)
         self.assertEqual(new_profile.profile_picture.name[0:17], 'meal.jpg')
-
-
